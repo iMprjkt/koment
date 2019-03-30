@@ -1,0 +1,10 @@
+{
+  "name": "koment",
+  "version": "1.0.0",
+  "description": "Commenting app",
+  "main": "index.js",
+  "repository": "git@github.com:iMprojekt/koment.git",
+  "author": "iMprojekt <imatafu@outlook.com>",
+  "license": "MIT",
+  "private": null
+}
