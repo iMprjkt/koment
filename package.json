@@ -3,20 +3,57 @@
   "version": "1.0.0",
   "description": "Commenting app",
   "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "data": "node test-data.js",
+    "test": "nyc mocha ./test/test.js --timeout 20000 --exit",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls",
+    "test:coverage": "mocha ./test/test.js --timeout 20000 --exit",
+    "_comment": "Force the test program to exit after finishing in case we use done()",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc --reporter=lcov --reporter=text-lcov npm test",
+    "lint": "eslint '**/*.js'",
+    "lint:fix": "prettier-eslint  '**/*.js' --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint:fix",
+      "git add"
+    ]
+  },
+  "nyc": {
+    "_comment": "Do code coverage within Mocha using nyc",
+    "register": "babel-register",
+    "include": [
+      "**/*.js",
+      "./*.js"
+    ],
+    "exclude": [
+      "**/node_modules/**",
+      "**/test/**",
+      "**/coverage/**",
+      "**/sample_data.js",
+      "**/index.js"
+    ],
+    "all": true
+  },
   "repository": "git@github.com:iMprojekt/koment.git",
   "author": "iMprojekt <imatafu@outlook.com>",
   "license": "MIT",
   "private": null,
   "dependencies": {
     "body-parser": "^1.18.3",
-    "chai": "^4.2.0",
-    "chai-http": "^4.2.1",
     "express": "^4.16.4",
-    "mocha": "^6.1.1",
-    "mysql": "^2.16.0",
-    "nyc": "^13.3.0"
+    "mysql": "^2.16.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "coveralls": "^3.0.3",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
@@ -27,8 +64,10 @@
     "husky": "^1.3.1",
     "jscoverage": "^0.6.0",
     "lint-staged": "^8.1.5",
+    "mocha": "^6.1.1",
     "mocha-lcov-reporter": "^1.3.0",
     "nodeunit": "^0.11.3",
+    "nyc": "^13.3.0",
     "prettier-eslint": "^8.8.2",
     "prettier-eslint-cli": "^4.7.1"
   },
